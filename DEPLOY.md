@@ -13,7 +13,7 @@ GitHub 仓库 (ai-kuaixia)
 
 | 组件 | 托管 | 地址示例 |
 |------|------|----------|
-| 网页 | GitHub Pages | https://opc007.github.io/aikuaixia/landing/app.html |
+| 网页 | GitHub Pages | https://opc007.github.io/ai-kuaixia/landing/app.html |
 | API | Render 免费版 | https://aikuaixia-api.onrender.com |
 
 ---
@@ -24,8 +24,6 @@ GitHub 仓库 (ai-kuaixia)
 2. Source 选 **Deploy from a branch**
 3. Branch 选 `main`，目录选 **`/ (root)`** 或 **`/landing`**（若根目录有 index.html 用 root）
 4. 保存后等待 1～2 分钟，访问：https://opc007.github.io/ai-kuaixia/landing/app.html
-
-> 若自定义域名为 `opc007.github.io/aikuaixia/`，需仓库名为 `aikuaixia`，或在 Pages 设置中配置。
 
 ---
 

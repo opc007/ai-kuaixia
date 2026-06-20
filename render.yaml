@@ -1,5 +1,4 @@
 # Render 一键部署：https://render.com/docs/blueprint-spec
-# 在 Render Dashboard → New → Blueprint → 连接本 Git 仓库即可
 services:
   - type: web
     name: aikuaixia-api
@@ -7,7 +6,7 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     plan: free
-    region: singapore
+    region: oregon
     healthCheckPath: /api/v1/platforms
     envVars:
       - key: DB_DRIVER
@@ -20,7 +19,3 @@ services:
         generateValue: true
       - key: PORT
         value: "8080"
-    disk:
-      name: aikuaixia-data
-      mountPath: /app/data
-      sizeGB: 1

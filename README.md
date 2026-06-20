@@ -10,9 +10,11 @@
 
 **粘贴文字，AI自动识别链接，一键下载全网视频**
 
-### 🌐 访问首页：[https://opc007.github.io/aikuaixia/](https://opc007.github.io/aikuaixia/)
+### 🌐 访问首页：[https://opc007.github.io/ai-kuaixia/](https://opc007.github.io/ai-kuaixia/)
 
-[🚀 马上使用](https://opc007.github.io/aikuaixia/landing/app.html) · [✨ 功能](#-核心功能) · [📖 使用方法](#-使用方法) · [❓ FAQ](#-faq)
+[🚀 马上使用](https://opc007.github.io/ai-kuaixia/landing/app.html) · [✨ 功能](#-核心功能) · [📖 使用方法](#-使用方法) · [❓ FAQ](#-faq)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/opc007/ai-kuaixia)
 
 </div>
 
@@ -63,7 +65,7 @@
 
 | 平台 | 状态 | 下载 |
 |------|------|------|
-| 🌐 网页版 | ✅ 可用 | [立即使用](https://opc007.github.io/aikuaixia/landing/app.html) |
+| 🌐 网页版 | ✅ 可用 | [立即使用](https://opc007.github.io/ai-kuaixia/landing/app.html) |
 | 🍎 iOS | 🔜 即将上线 | - |
 | 🤖 Android | 🔜 即将上线 | - |
 | 💻 macOS | ✅ 可用 | [下载 .dmg]() |
@@ -112,7 +114,7 @@ A: 暂不支持，后续版本会加入此功能。
 
 **⭐ 如果觉得好用，请给我们一个 Star！⭐**
 
-🌐 访问首页：[https://opc007.github.io/aikuaixia/](https://opc007.github.io/aikuaixia/)
+🌐 访问首页：[https://opc007.github.io/ai-kuaixia/](https://opc007.github.io/ai-kuaixia/)
 
 © 2026 AI快侠. All rights reserved.
 
