@@ -1,12 +1,11 @@
 # AI快侠后端 - 用于 Render / Railway / 阿里云 等 Docker 部署
-FROM golang:1.23-alpine AS builder
+FROM golang:1.25-bookworm AS builder
 
 WORKDIR /app
 
-RUN apk add --no-cache git gcc musl-dev
+RUN apt-get update && apt-get install -y --no-install-recommends gcc libc6-dev git && rm -rf /var/lib/apt/lists/*
 
 COPY go.mod go.sum ./
-ENV GOTOOLCHAIN=local
 RUN go mod download
 
 COPY cmd/ ./cmd/
