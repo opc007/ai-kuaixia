@@ -1,0 +1,12 @@
+# 排除源代码和敏感文件
+*.go
+*.dart
+go.mod
+go.sum
+pubspec.yaml
+/app/
+/internal/
+/cmd/
+.env
+*.key
+.DS_Store

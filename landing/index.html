@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI快侠 - 一键下载全网视频 | 抖音 快手 B站 小红书 YouTube</title>
+  <meta name="description" content="AI快侠，智能视频下载神器。支持抖音、快手、B站、小红书、YouTube等全平台，粘贴文字自动识别链接，一键下载高清视频。">
+  <meta name="keywords" content="视频下载,抖音下载,快手下载,B站下载,YouTube下载,短视频下载,去水印,AI下载">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #6C63FF;
+      --primary-dark: #5A52E0;
+      --accent: #FF6B6B;
+      --bg-dark: #0F0E17;
+      --bg-card: #1A1932;
+      --text: #FFFFFE;
+      --text-secondary: #A7A9BE;
+      --gradient: linear-gradient(135deg, #6C63FF 0%, #FF6B6B 100%);
+    }
+
+    body {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      background: radial-gradient(ellipse at 50% 0%, rgba(108, 99, 255, 0.15) 0%, transparent 60%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236C63FF' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(108, 99, 255, 0.15);
+      border: 1px solid rgba(108, 99, 255, 0.3);
+      border-radius: 50px;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      animation: fadeInUp 0.6s ease 0.1s both;
+    }
+
+    .hero h1 .gradient {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.8;
+      animation: fadeInUp 0.6s ease 0.2s both;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease 0.3s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: white;
+      box-shadow: 0 4px 24px rgba(108, 99, 255, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(108, 99, 255, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* ===== Stats ===== */
+    .stats {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      margin-top: 60px;
+      animation: fadeInUp 0.6s ease 0.4s both;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 900;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* ===== Features ===== */
+    .features {
+      padding: 100px 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .section-title p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 32px;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(108, 99, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(108, 99, 255, 0.1);
+    }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ===== Platforms ===== */
+    .platforms {
+      padding: 80px 2rem;
+      background: linear-gradient(180deg, transparent 0%, rgba(108, 99, 255, 0.05) 50%, transparent 100%);
+    }
+
+    .platforms-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .platform-tag {
+      padding: 10px 24px;
+      background: var(--bg-card);
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .platform-tag:hover {
+      border-color: var(--primary);
+      background: rgba(108, 99, 255, 0.1);
+    }
+
+    /* ===== How it works ===== */
+    .how-it-works {
+      padding: 100px 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 32px;
+      background: var(--bg-card);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .step-number {
+      width: 64px;
+      height: 64px;
+      min-width: 64px;
+      border-radius: 16px;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .step h3 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ===== Download ===== */
+    .download {
+      padding: 100px 2rem;
+      text-align: center;
+    }
+
+    .download-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 900px;
+      margin: 40px auto 0;
+    }
+
+    .download-card {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 32px;
+      border: 1px solid rgba(255,255,255,0.05);
+      min-width: 200px;
+      flex: 1;
+      transition: all 0.3s ease;
+    }
+
+    .download-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+    }
+
+    .download-card .icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+    }
+
+    .download-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .download-card p {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .download-card .btn {
+      margin-top: 16px;
+      width: 100%;
+      justify-content: center;
+      padding: 12px 20px;
+      font-size: 14px;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      padding: 40px 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    footer p {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* ===== Animations ===== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== Mobile ===== */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .stats { flex-direction: column; gap: 24px; }
+      .step { flex-direction: column; text-align: center; }
+      .download-cards { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="badge">🚀 AI驱动 · 全平台支持</div>
+      <h1>
+        <span class="gradient">AI快侠</span><br>
+        一键下载全网视频
+      </h1>
+      <p>
+        粘贴文字，AI自动识别链接。支持抖音、快手、B站、小红书、YouTube、TikTok等全平台。
+        无需登录，无需会员，高清无水印下载。
+      </p>
+      <div class="cta-group">
+        <a href="#download" class="btn btn-primary">
+          ⬇️ 免费下载
+        </a>
+        <a href="#features" class="btn btn-outline">
+          了解更多 →
+        </a>
+      </div>
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">支持平台</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">AI</div>
+          <div class="stat-label">智能识别</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">5端</div>
+          <div class="stat-label">全平台覆盖</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">HD</div>
+          <div class="stat-label">高清画质</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="section-title">
+      <h2>为什么选择 AI快侠？</h2>
+      <p>不只是下载器，更是你的AI视频助手</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(108, 99, 255, 0.15);">🤖</div>
+        <h3>AI智能识别</h3>
+        <p>粘贴整段分享文字，AI自动提取视频链接。不需要手动清理文字、提取URL，省心省力。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(255, 107, 107, 0.15);">🎯</div>
+        <h3>全平台覆盖</h3>
+        <p>抖音、快手、B站、小红书、YouTube、TikTok、微视、西瓜视频...主流平台一网打尽。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(78, 205, 196, 0.15);">💬</div>
+        <h3>AI对话助手</h3>
+        <p>内置AI对话功能，可以帮你解析链接、推荐视频、回答问题，不只是冷冰冰的工具。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(255, 190, 11, 0.15);">📱</div>
+        <h3>多端支持</h3>
+        <p>iOS、Android手机端 + macOS、Windows、Linux桌面端，随时随地下载视频。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(46, 213, 115, 0.15);">🔒</div>
+        <h3>突破限制</h3>
+        <p>即使创作者设置了"不允许下载"，AI快侠也能智能解析并下载视频内容。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(255, 107, 255, 0.15);">⚡</div>
+        <h3>极速下载</h3>
+        <p>采用先进的下载引擎，多线程加速，大文件也能快速完成，节省你的宝贵时间。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Platforms -->
+  <section class="platforms">
+    <div class="section-title">
+      <h2>支持的平台</h2>
+      <p>覆盖主流短视频和视频平台</p>
+    </div>
+    <div class="platforms-grid">
+      <div class="platform-tag">🎵 抖音</div>
+      <div class="platform-tag">🎬 快手</div>
+      <div class="platform-tag">📺 B站</div>
+      <div class="platform-tag">📕 小红书</div>
+      <div class="platform-tag">▶️ YouTube</div>
+      <div class="platform-tag">🎶 TikTok</div>
+      <div class="platform-tag">📹 微视</div>
+      <div class="platform-tag">🍉 西瓜视频</div>
+      <div class="platform-tag">🌐 其他网站</div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how-it-works" id="how">
+    <div class="section-title">
+      <h2>如何使用？</h2>
+      <p>三步搞定，简单到不可思议</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div>
+          <h3>复制分享文字</h3>
+          <p>从抖音、快手等平台复制视频分享链接（包含文字和链接的整段文字都可以）</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div>
+          <h3>粘贴到AI快侠</h3>
+          <p>打开AI快侠，粘贴文字，AI自动识别并提取视频链接，显示视频信息</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div>
+          <h3>一键下载</h3>
+          <p>点击下载按钮，视频自动保存到本地。支持在手机相册或电脑文件夹中查看</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section class="download" id="download">
+    <div class="section-title">
+      <h2>立即下载</h2>
+      <p>选择你的平台，开始使用AI快侠</p>
+    </div>
+    <div class="download-cards">
+      <div class="download-card">
+        <div class="icon">🍎</div>
+        <h3>iOS</h3>
+        <p>iPhone / iPad</p>
+        <a href="#" class="btn btn-outline">即将上线</a>
+      </div>
+      <div class="download-card">
+        <div class="icon">🤖</div>
+        <h3>Android</h3>
+        <p>安卓手机</p>
+        <a href="#" class="btn btn-outline">即将上线</a>
+      </div>
+      <div class="download-card">
+        <div class="icon">💻</div>
+        <h3>macOS</h3>
+        <p>Mac电脑</p>
+        <a href="#" class="btn btn-primary">下载.dmg</a>
+      </div>
+      <div class="download-card">
+        <div class="icon">🖥️</div>
+        <h3>Windows</h3>
+        <p>PC电脑</p>
+        <a href="#" class="btn btn-outline">即将上线</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 AI快侠 - 智能视频下载工具 | Powered by AI</p>
+  </footer>
+
+</body>
+</html>
