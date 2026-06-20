@@ -1,12 +1,18 @@
-# 排除源代码和敏感文件
-*.go
-*.dart
-go.mod
-go.sum
-pubspec.yaml
-/app/
-/internal/
-/cmd/
+# 排除敏感文件
 .env
+.env.*
 *.key
+*.db
+*.db-journal
 .DS_Store
+
+# Flutter 桌面端（不在此仓库维护）
+/app/
+
+# Node 依赖
+**/node_modules/
+
+# 编译产物
+backend/server
+backend/main
+backend/storage/

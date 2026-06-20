@@ -58,6 +58,9 @@
 
 ## 📥 下载
 
+> **部署说明**：本仓库含网页 + 后端源码，详见 [DEPLOY.md](./DEPLOY.md)  
+> 网页托管 GitHub Pages，API 可一键部署到 [Render](https://render.com) 免费版，后续可迁移阿里云。
+
 | 平台 | 状态 | 下载 |
 |------|------|------|
 | 🌐 网页版 | ✅ 可用 | [立即使用](https://opc007.github.io/aikuaixia/landing/app.html) |

@@ -1,0 +1,12 @@
+*.db
+*.db-journal
+server
+main
+.env
+.env.*
+storage/
+.git/
+app/
+web/node_modules/
+**/*.test
+**/*_test.go
