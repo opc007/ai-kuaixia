@@ -6,6 +6,7 @@ WORKDIR /app
 RUN apk add --no-cache git gcc musl-dev
 
 COPY go.mod go.sum ./
+ENV GOTOOLCHAIN=local
 RUN go mod download
 
 COPY cmd/ ./cmd/
@@ -19,8 +20,7 @@ FROM alpine:3.19
 WORKDIR /app
 
 RUN apk add --no-cache \
-    ca-certificates tzdata \
-    yt-dlp python3 py3-pip ffmpeg \
+    ca-certificates tzdata ffmpeg python3 py3-pip \
     && pip3 install --break-system-packages --no-cache-dir yt-dlp \
     && yt-dlp --version
 
