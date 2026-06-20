@@ -543,27 +543,62 @@
       }
     }
 
-    // 下载视频
-    function downloadVideo() {
+    // 下载视频（使用fetch下载，避免浏览器跳转问题）
+    async function downloadVideo() {
       if (!currentData) return;
       
       const input = document.getElementById('urlInput').value.trim();
       // 提取原始链接
       const urlMatch = input.match(/https?:\/\/v\.douyin\.com\/\w+\/?/i) ||
+                       input.match(/https?:\/\/v\.kuaishou\.com\/\w+\/?/i) ||
+                       input.match(/https?:\/\/b23\.tv\/\w+\/?/i) ||
+                       input.match(/https?:\/\/xhslink\.com\/\w+\/?/i) ||
+                       input.match(/https?:\/\/youtu\.be\/\w+\/?/i) ||
+                       input.match(/https?:\/\/vm\.tiktok\.com\/\w+\/?/i) ||
                        input.match(/https?:\/\/[^\s]+/i);
       const shareUrl = urlMatch ? urlMatch[0] : input;
       
       const downloadUrl = `${API_BASE}/download/v2?url=${encodeURIComponent(shareUrl)}&platform=${currentData.platform}&title=${encodeURIComponent(currentData.title || 'video')}`;
       
-      showToast('正在下载，请稍候...');
+      // 显示下载中状态
+      const btn = document.querySelector('.btn-download');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⏳ 正在下载...';
+      btn.disabled = true;
       
-      // 创建隐藏的a标签触发下载
-      const a = document.createElement('a');
-      a.href = downloadUrl;
-      a.download = '';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      try {
+        // 使用fetch下载文件
+        const response = await fetch(downloadUrl);
+        
+        if (!response.ok) {
+          throw new Error(`下载失败: ${response.status}`);
+        }
+        
+        // 获取文件blob
+        const blob = await response.blob();
+        
+        // 创建下载链接
+        const blobUrl = URL.createObjectURL(blob);
+        const filename = `AI快侠_${currentData.platform}_${Date.now()}.mp4`;
+        
+        // 触发下载
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        // 清理
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+        
+        showToast('下载成功！');
+      } catch (e) {
+        showError('下载失败: ' + e.message);
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
     }
 
     // 显示错误
