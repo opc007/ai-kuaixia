@@ -4,6 +4,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/cookiejar"
+	"net/url"
 	"strings"
 	"time"
 
@@ -41,11 +42,23 @@ func (h *DownloadHandler) DownloadVideo(c *gin.Context) {
 		h.prepareDouyinCookies(client)
 	}
 
+	// 校验 URL（禁止非 http/https）
+	u, err := url.Parse(videoURL)
+	if err != nil || (u.Scheme != "http" && u.Scheme != "https") {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "无效的视频链接"})
+		return
+	}
+
 	// 创建下载请求
 	req, err := http.NewRequest("GET", videoURL, nil)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "无效的视频链接"})
 		return
+	}
+
+	// 转发客户端 Range（支持断点/播放跳转）
+	if rangeHdr := c.GetHeader("Range"); rangeHdr != "" {
+		req.Header.Set("Range", rangeHdr)
 	}
 
 	// 设置请求头
@@ -84,25 +97,38 @@ func (h *DownloadHandler) DownloadVideo(c *gin.Context) {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
+	// 支持上游返回 200/206（已支持分片）
+	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusPartialContent {
 		c.JSON(resp.StatusCode, gin.H{"error": "下载失败，状态码: " + resp.Status})
 		return
 	}
 
-	// 设置响应头
+	// 设置响应头：按上游返回头转发关键头
 	contentType := resp.Header.Get("Content-Type")
 	if contentType == "" {
 		contentType = "video/mp4"
 	}
 
-	contentLength := resp.Header.Get("Content-Length")
-	
 	c.Header("Content-Type", contentType)
-	if contentLength != "" {
-		c.Header("Content-Length", contentLength)
+	if cr := resp.Header.Get("Content-Range"); cr != "" {
+		c.Header("Content-Range", cr)
 	}
-	c.Header("Content-Disposition", "attachment; filename=video.mp4")
-	c.Header("Access-Control-Allow-Origin", "*")
+	if ar := resp.Header.Get("Accept-Ranges"); ar != "" {
+		c.Header("Accept-Ranges", ar)
+	}
+	if cl := resp.Header.Get("Content-Length"); cl != "" {
+		c.Header("Content-Length", cl)
+	}
+	// 尝试从上游 Content-Disposition 或 URL 推断文件名
+	if cd := resp.Header.Get("Content-Disposition"); cd != "" {
+		c.Header("Content-Disposition", cd)
+	} else {
+		c.Header("Content-Disposition", "attachment; filename=video.mp4")
+	}
+	// CORS 由全局中间件处理，不在此重复设置
+
+	// 返回上游状态码（支持 206）
+	c.Status(resp.StatusCode)
 
 	// 流式传输
 	io.Copy(c.Writer, resp.Body)

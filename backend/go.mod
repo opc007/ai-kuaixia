@@ -1,4 +1,4 @@
-module github.com/aikuaixia/aikuaixia
+module github.com/opc007/ai-kuaixia/backend
 
 go 1.25.0
 

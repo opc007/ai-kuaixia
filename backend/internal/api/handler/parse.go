@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	"github.com/aikuaixia/aikuaixia/internal/service/parser"
+	"github.com/opc007/ai-kuaixia/backend/internal/service/parser"
 	"github.com/gin-gonic/gin"
 )
 
